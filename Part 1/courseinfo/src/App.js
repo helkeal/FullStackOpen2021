@@ -44,11 +44,18 @@ function Header(props) {
 function Content(props) {
     return (
      <div>
-        {props.list.map(element => <p>{element.name}: {element.exercises}</p>)}
+        {props.list.map(element => <Part name={element.name} exercises={element.exercises}/>)}
      </div>
     )
 }
 
+function Part(props) {
+    return(
+        <div>
+        <p>{props.name}:{props.exercises} </p>
+        </div>
+    )
+}
 
 function Total(props) {
     return (
