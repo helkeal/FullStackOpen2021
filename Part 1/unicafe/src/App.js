@@ -1,41 +1,56 @@
-import {useState} from 'react'
+import {useState} from 'react';
 
 function App() {
 
- const [good, incrementGood] = useState(0)
- const [neutral, incrementNeutral] = useState(0)
- const [bad, incrementBad] = useState(0)
+  const [points, setPoints] = useState(
+    {
+      "good": 0,
+      "neutral": 0,
+      "bad": 0
+    }
+  )
 
- const all = good + neutral + bad;
- const average = (good - bad) / all;
- const positive = (good / all) * 100;
-
-  return (
-   <div>
-   
-    <h1>give feedback</h1>
-    
+  return(
     <div>
-    
-     <button onClick={() => incrementGood(good + 1)}> good </button>
-     <button  onClick={() => incrementNeutral(neutral + 1)}> neutral </button>
-     <button  onClick={() => incrementBad(bad + 1)}> bad </button>
-     
-     </div>
-    <div>
-    
-     <h1> statistics </h1>
-     <p> good {good} </p>
-     <p> neutral {neutral} </p>
-     <p> bad {bad} </p>
-
-     <p>all {all}</p>
-     <p>average {average}</p>
-      <p>positive {positive}%</p>
+      <Statistics points = {points}/>
     </div>
-   </div>
   )
 }
 
+function Statistics({points}) {
+
+  let total = Object.values(points).reduce((a, b) => a + b);
+  console.log(total);
+
+  if (total == 0)  {
+    return(
+    <div>
+      <h2>statistics</h2>
+      <p>No elements to show</p>
+    </div>
+  )} 
+  
+  else {
+
+    return(
+      <div>
+        <h2>statistics</h2>
+        {Object.keys(points).map(element => <StatisticsLine text={element} point={points[element]}/>)}
+      </div>
+    )
+
+
+  }
+
+}
+
+
+function StatisticsLine({text, point}) {
+  return(
+    <div>
+      <p>{text}: {point}</p>
+    </div>
+  )
+}
 
 export default App;
