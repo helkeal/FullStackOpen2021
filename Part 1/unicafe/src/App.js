@@ -46,6 +46,12 @@ function Button({text, points, setter}) {
 function Statistics({points}) {
 
   let total = Object.values(points).reduce((a, b) => a + b);
+  let object = {
+    all: total,
+    average: (points['good'] - points['bad']) / total, 
+    positive: (points['good'] / total * 100) + "%"
+  }
+
   if (total === 0)  {
     return(
     <div>
@@ -60,10 +66,9 @@ function Statistics({points}) {
       <div>
         <h2>statistics</h2>
         {Object.keys(points).map(element => <StatisticsLine key={Math.random() * 10}text={element} point={points[element]}/>)}
+        {Object.keys(object).map(element => <StatisticsLine key={Math.random() * 10}text={element} point={object[element]}/>)}
       </div>
     )
-
-
   }
 
 }
@@ -71,9 +76,10 @@ function Statistics({points}) {
 
 function StatisticsLine({text, point}) {
   return(
-    <div>
-      <p>{text}: {point}</p>
-    </div>
+    <tr>
+      <td>{text}</td>
+      <td>{point}</td>
+    </tr>
   )
 }
 
