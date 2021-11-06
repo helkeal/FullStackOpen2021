@@ -9,8 +9,9 @@ function App() {
     { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
   ])
 
-  const [shownPersons, setShownPersons] = useState(persons)
+  const [shownPersons, setShownPersons] = useState([]);
 
+  console.log(persons)
   return (
     <div>
       <Filter persons={shownPersons} oldPersons={persons} setPersons={setShownPersons} />
@@ -56,10 +57,12 @@ function PersonForm({persons, setPersons}) {
       let contact = {
         name: name,
         number: number,
-        id: persons.length
+        id: persons.length + 1
       }
-      setPersons([...persons, contact]);
-      console.log(persons)
+
+      console.log("NC added")
+      let newpersons = [...persons, contact]
+      setPersons(newpersons);
     }
   }
 
@@ -86,17 +89,22 @@ function PersonForm({persons, setPersons}) {
 }
 
 function Display({persons, shown}) {
-  if (persons.length === shown.length)
-  {return(
-    <div>
-      <h1>Persons</h1>
-      {persons.map(element => <Person person={element}/>)}
-    </div>
-  )} else {
+  if (persons.length > shown.length && shown.length == 0)
+  {
+    console.log(persons)
+    console.log(shown)
+
     return(
     <div>
       <h1>Persons</h1>
-      {shown.map(element => <Person person={element}/>)}
+      {persons.map(element => <Person key={element.id} person={element}/>)}
+    </div>
+  )} else {
+    console.log(shown)
+    return(
+    <div>
+      <h1>Persons</h1>
+      {shown.map(element => <Person key={element.id} person={element}/>)}
     </div>
     )
   }
