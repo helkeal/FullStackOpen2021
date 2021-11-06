@@ -60,7 +60,6 @@ function PersonForm({persons, setPersons}) {
         id: persons.length + 1
       }
 
-      console.log("NC added")
       let newpersons = [...persons, contact]
       setPersons(newpersons);
     }
@@ -91,16 +90,12 @@ function PersonForm({persons, setPersons}) {
 function Display({persons, shown}) {
   if (persons.length > shown.length && shown.length == 0)
   {
-    console.log(persons)
-    console.log(shown)
-
     return(
     <div>
       <h1>Persons</h1>
       {persons.map(element => <Person key={element.id} person={element}/>)}
     </div>
   )} else {
-    console.log(shown)
     return(
     <div>
       <h1>Persons</h1>
