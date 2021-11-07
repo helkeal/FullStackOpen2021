@@ -1,4 +1,5 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import axios from 'axios';
 
 function App() {
 
@@ -11,7 +12,15 @@ function App() {
 
   const [shownPersons, setShownPersons] = useState([]);
 
-  console.log(persons)
+  useEffect(() => {
+    axios.get("http://localhost:3001/persons")
+         .then(persons => {
+          console.log("Done!");
+          setPersons(persons.data)
+         }      
+         )
+  }, [])
+
   return (
     <div>
       <Filter persons={shownPersons} oldPersons={persons} setPersons={setShownPersons} />
