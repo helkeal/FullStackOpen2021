@@ -1,0 +1,37 @@
+import {useState, useEffect} from 'react';
+import axios from 'axios';
+
+function App() {
+
+  const [countries, setCountries] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    axios.get("https://restcountries.com/v3.1/all")
+         .then(response => {
+           setCountries(response.data)});
+  }, []);
+
+  console.log(countries);
+
+  return (
+    <div>
+      <h1>Countries!</h1>
+      <Search setter={setSearchResults} countries={countries}/>
+    </div>
+  );
+}
+
+function Search({countries, setter}) {
+  return(
+    <div>
+      <form>
+          <p>Find a country</p>
+          <input/>
+      </form>
+    </div>
+  )
+}
+
+
+export default App;
