@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import comms from './Communication.js'
 
 function App() {
 
@@ -13,9 +14,8 @@ function App() {
   const [shownPersons, setShownPersons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons")
+    comms.get()
          .then(persons => {
-          console.log("Done!");
           setPersons(persons.data)
          }      
          )
@@ -69,10 +69,13 @@ function PersonForm({persons, setPersons}) {
         id: persons.length + 1
       }
 
-      let newpersons = [...persons, contact]
+      let newpersons = [...persons].concat(contact)
       setPersons(newpersons);
+      
+      comms.add(contact)
+      }
     }
-  }
+  
 
   return(
     <div>
@@ -97,6 +100,8 @@ function PersonForm({persons, setPersons}) {
 }
 
 function Display({persons, shown}) {
+
+
   if (persons.length > shown.length && shown.length == 0)
   {
     return(
@@ -118,6 +123,14 @@ function Person({person}) {
   return(
     <p>{person.name}: {person.number}</p>
   )
+}
+
+function Delete(id) {
+ let confirmation = windows.confirm("Are you sure you want to delete this contact?");
+ 
+ if (confirmation) {
+   
+ }
 }
 
 
