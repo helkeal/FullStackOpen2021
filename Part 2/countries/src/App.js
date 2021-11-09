@@ -12,23 +12,25 @@ function App() {
          .then(response => {
            setCountries(response.data)});
   }, []);
+  
+  
+ function handleChange(event) {
+  setQuery(event.target.value);
+  let searchResult = countries.filter(element => element.name.common.match(query) || element.name.official.match(query));
+  setSearchResults(searchResult);
+ };
+ 
 
   return (
     <div>
       <h1>Countries!</h1>
-      <Search setter={setSearchResults} query={query} setQuery={setQuery} countries={countries}/>
-      <Countries searchResults={searchResults} setQuery={setQuery}/>
+      <Search setter={setSearchResults} query={query} handleChange = {handleChange} setQuery={setQuery} countries={countries}/>
+      <Countries searchResults={searchResults} handleChange = {handleChange} setQuery={setQuery}/>
     </div>
   );
 }
 
-function Search({countries, query, setQuery, setter}) {
- 
- function handleChange(event) {
-  setQuery(event.target.value);
-  let searchResult = countries.filter(element => element.name.common.match(query) || element.name.official.match(query));
-  setter(searchResult)
- };
+function Search({countries, query, setQuery, handleChange, setter}) {
  
   return(
     <div>
@@ -40,13 +42,13 @@ function Search({countries, query, setQuery, setter}) {
   )
 }
 
-function Countries({searchResults, setQuery}) {
+function Countries({searchResults, handleChange, setQuery}) {
 
  if (searchResults.length > 1 && searchResults.length < 10) {
   return(
    <div>
     <h1>Display</h1>
-    {searchResults.map(country => <CountryNames country = {country} setQuery={setQuery}/>)}
+    {searchResults.map(country => <CountryNames country = {country} handleChange={handleChange} setQuery={setQuery}/>)}
    </div>
   )
  } else if (searchResults.length == 1) {
@@ -64,13 +66,13 @@ function Countries({searchResults, setQuery}) {
  
 }
 
-function CountryNames({country, setQuery}) {
+function CountryNames({country, handleChange, setQuery}) {
  return(
   <ul>
   <li>  
   <div>
    <p>{country.name.common} </p>
-   
+   <button onClick={handleChange}>Show</button>
   </div>
   </li>
   </ul>
@@ -106,7 +108,7 @@ function Languages({languages}) {
  let list = Object.keys(languages)
                   .map(element => <li>{languages[element]}</li>)
                   
- 
+
  return(
   <ul>
    {list}
