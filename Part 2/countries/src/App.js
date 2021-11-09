@@ -99,6 +99,7 @@ console.log( country)
    </div>
    <div className="symbols"/>
     <img src={country.flags.png} alt="Flag"/>
+   <Weather capital={country.capital}/>
   </div>
  )
 }
@@ -116,6 +117,41 @@ function Languages({languages}) {
  )
 }
 
+function Weather({capital}) {
 
+ const [weather, setWeather] = useState({});
+ 
+ const api_key = process.env.REACT_APP_WEATHER;
+ 
+ useEffect(() => {
+  axios.get(
+   `http://api.weatherstack.com/current?access_key=${api_key}&query=${capital}`
+  ).then(
+   response => {
+   setWeather(response.data)
+   }
+  )
+ }, [api_key]);
+ 
+ 
+ if (Object.keys(weather).length !== 0) {
+ 
+ console.log(weather)
+ return(
+  <div>
+   <h2>Weather in {capital}</h2>
+   <div>
+    <p>Temperature: {weather.current.temperature}</p>
+    <img src={weather.current.weather_icons} alt={weather.current.weather_description}/>
+   </div>
+  </div>
+ )} 
+ 
+ return(
+  <div>
+   <h2>Weather in {capital}</h2>
+  </div>
+ )
+}
 
 export default App;
