@@ -11,12 +11,8 @@ function Get() {
  return axios.get(baseURL)
 }
 
-function Delete(object) {
- return axios.delete(`${baseURL}/${object.id}`)
-}
-
-function Update(object, id) {
- return axios.put(`${baseURL}/${object.id}`, object)
+function Delete(id) {
+ return axios.delete(`${baseURL}/${id}`)
 }
 
 export default  {
