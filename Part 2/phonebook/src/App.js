@@ -56,20 +56,28 @@ function PersonForm({persons, setPersons}) {
 
   const [name, setName] = useState("");
   const [number, setNumber] = useState("")
-  
+
 
   function create(event) {
     event.preventDefault()
 
-    if (persons.find(element => element.name.match(name))) {
-      alert("This contact is already in the phonebook")
-    } else {
+
       let contact = {
         name: name,
-        number: number,
-        id: persons.length + 1
+        number: number
       }
 
+
+    if (persons.find(element => element.name.match(name))) {
+     if (window.confirm("Would you like to replace the number?")) {
+
+      let id = [...persons].filter(element => element.name.match(name))
+      id = id[0].id
+      comms.update(id, contact)
+      let newpersons = [...persons].filter(element => !element.name.match(name)).concat(contact).sort(element => element.name);
+      setPersons(newpersons)
+     }
+    } else {
       let newpersons = [...persons].concat(contact)
       setPersons(newpersons);
 

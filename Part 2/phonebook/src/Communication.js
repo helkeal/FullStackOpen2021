@@ -15,12 +15,13 @@ function Delete(object) {
  return axios.delete(`${baseURL}/${object.id}`)
 }
 
-function Update(object, id) {
- return axios.put(`${baseURL}/${object.id}`, object)
+function Update(id, object) {
+ return axios.put(`${baseURL}/${id}`, object)
 }
 
 export default  {
  add: Add,
  get: Get,
- delete: Delete
+ delete: Delete,
+ update: Update
 }
