@@ -28,6 +28,12 @@ server.get('/persons', (request, response) => {
  response.json(contacts);
 })
 
+
+server.get('/info', (request, response) => {
+ response.send(`<div><p>Phonebook has gotten ${contacts.length} contacts</p><p>${new Date()}</p></div>`)
+})
+
+
 const PORT = 3001;
 server.listen(PORT, () => {
  console.log(`Application has been successfully deployed on ${PORT}. Date: ${new Date()}`)
