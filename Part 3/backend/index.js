@@ -48,6 +48,20 @@ server.delete('/persons/:id', (request, response) => {
  })
 
 
+server.post('/persons', (request, response) => {
+ if (!request.body) {
+  response.status(400).end()
+ } else {
+  console.log(request.body);
+  const object = {
+   id: persons.length + 1
+  }
+ }
+ contacts.push(object);
+ response.status(203).end()
+})
+
+
 server.get('/info', (request, response) => {
  response.send(`<div><p>Phonebook has gotten ${contacts.length} contacts</p><p>${new Date()}</p></div>`)
 })
