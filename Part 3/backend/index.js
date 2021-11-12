@@ -1,7 +1,7 @@
 const express = require('express');
 const server = express();
 
-const contacts = [
+let contacts = [
     {
       "id": 1,
       "name": "Arto Hellas",
@@ -32,9 +32,20 @@ server.get('/persons', (request, response) => {
 server.get('/persons/:id', (request, response) => {
  const id = parseInt(request.params.id);
  const contact = contacts.filter(element => element.id == id);
- response.json(contact)
+ if (contact.length > 0)
+   {response.json(contact)} else {
+    response.status(404).json(
+     {error: "No contact has been found with such ID"}
+    )
+   }
 })
 
+
+server.delete('/persons/:id', (request, response) => {
+ const id = parseInt(request.params.id);
+ contacts = contacts.filter(element => element.id !== id);
+ response.status(203).end()
+ })
 
 
 server.get('/info', (request, response) => {
