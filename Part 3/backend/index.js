@@ -29,6 +29,14 @@ server.get('/persons', (request, response) => {
 })
 
 
+server.get('/persons/:id', (request, response) => {
+ const id = parseInt(request.params.id);
+ const contact = contacts.filter(element => element.id == id);
+ response.json(contact)
+})
+
+
+
 server.get('/info', (request, response) => {
  response.send(`<div><p>Phonebook has gotten ${contacts.length} contacts</p><p>${new Date()}</p></div>`)
 })
