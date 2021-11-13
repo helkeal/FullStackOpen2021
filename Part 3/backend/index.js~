@@ -24,8 +24,6 @@ let contacts = [
     }
 ];
 
-server.use(express.json())
-
 server.get('/persons', (request, response) => {
  response.json(contacts);
 })
@@ -51,18 +49,16 @@ server.delete('/persons/:id', (request, response) => {
 
 
 server.post('/persons', (request, response) => {
- if (Object.keys(request.body).length == 0) {
+ if (!request.body) {
   response.status(400).end()
  } else {
   console.log(request.body);
   const object = {
-   ...request.body,
-   id: contacts.length + 1
+   id: persons.length + 1
   }
-
+ }
  contacts.push(object);
  response.status(203).end()
- }
 })
 
 
