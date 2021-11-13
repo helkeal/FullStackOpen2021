@@ -51,19 +51,43 @@ server.delete('/persons/:id', (request, response) => {
 
 
 server.post('/persons', (request, response) => {
+ try {
+
  if (Object.keys(request.body).length == 0) {
   response.status(400).end()
  } else {
+
+
   console.log(request.body);
   const object = {
    ...request.body,
    id: contacts.length + 1
   }
 
- contacts.push(object);
- response.status(203).end()
+  if (!object.name) {
+   response.status(400).json(
+    {"error": "One has to have name"}
+   )
+  } else if (!object.number) {
+   response.status(400).json(
+    {"error": "One has to have a number"}
+   )
+  }
+
+ if (contacts.filter(element => element.name == object.name).length == 0){
+  contacts.push(object);
+  response.status(203).end()
  }
-})
+ else {
+  response.status(400).end()
+ }}
+
+}catch (error) {
+  response.status(500).end()
+ }
+
+}
+)
 
 
 server.get('/info', (request, response) => {
@@ -75,3 +99,5 @@ const PORT = 3001;
 server.listen(PORT, () => {
  console.log(`Application has been successfully deployed on ${PORT}. Date: ${new Date()}`)
 })
+
+// hey! unpack them into their modules!
