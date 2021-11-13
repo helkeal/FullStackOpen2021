@@ -57,7 +57,6 @@ server.post('/persons', (request, response) => {
   response.status(400).end()
  } else {
 
-
   console.log(request.body);
   const object = {
    ...request.body,
