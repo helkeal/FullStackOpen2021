@@ -17,7 +17,7 @@ function App() {
     comms.get()
          .then(persons => {
           setPersons(persons.data)
-         }      
+         }
          )
   }, [])
 
@@ -57,31 +57,40 @@ function PersonForm({persons, setPersons}) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("")
 
+
   function create(event) {
     event.preventDefault()
 
-    if (persons.find(element => element.name.match(name))) {
-      alert("This contact is already in the phonebook")
-    } else {
+
       let contact = {
         name: name,
-        number: number,
-        id: persons.length + 1
+        number: number
       }
 
+
+    if (persons.find(element => element.name.match(name))) {
+     if (window.confirm("Would you like to replace the number?")) {
+
+      let id = [...persons].filter(element => element.name.match(name))
+      id = id[0].id
+      comms.update(id, contact)
+      let newpersons = [...persons].filter(element => !element.name.match(name)).concat(contact).sort(element => element.name);
+      setPersons(newpersons)
+     }
+    } else {
       let newpersons = [...persons].concat(contact)
       setPersons(newpersons);
-      
+
       comms.add(contact)
       }
     }
-  
+
 
   return(
     <div>
       <h1>Add your contact</h1>
       <div>
-        <form onSubmit={create}> 
+        <form onSubmit={create}>
         <fieldset>
          <label>
            <p>Name</p>
@@ -107,13 +116,13 @@ function Display({persons, shown}) {
     return(
     <div>
       <h1>Persons</h1>
-      {persons.map(element => <Person key={element.id} person={element}/> <Delete id={element.id}/>}
+      {persons.map(element => <Person key={element.id} person={element}/>)}
     </div>
   )} else {
     return(
     <div>
       <h1>Persons</h1>
-      {shown.map(element => <Person key={element.id} person={element}/> <Delete id={element.id}/>)}
+      {shown.map(element => <Person key={element.id} person={element}/>)}
     </div>
     )
   }
@@ -121,20 +130,33 @@ function Display({persons, shown}) {
 
 function Person({person}) {
   return(
+  <div>
     <p>{person.name}: {person.number}</p>
+    <Delete id={person.id}/>
+   </div>
   )
 }
 
 function Delete(id) {
 
+ function destroy()
+ {
  if (window.confirm("Are you sure you want to delete this contact?")) {
-   return comms.delete(id)
+   return comms.delete(id).catch(
+    response => {
+    return(
+     <div>
+       <p>The contact has been deleted already</p>
+     </div>
+    )}
+   )
  }
- 
+ }
+
  return (
-  <button/>Delete</button>
+  <button onClick={destroy}>Delete</button>
  )
- 
+
 }
 
 

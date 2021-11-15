@@ -1,4 +1,5 @@
 import React from 'react';
+
 function Course({course}) {
     return (
       <div>
@@ -29,7 +30,7 @@ function Course({course}) {
   function Part(props) {
       return(
           <div>
-          <p>{props.name}:{props.exercises} </p>
+          <p>{props.name}: {props.exercises} </p>
           </div>
       )
   }

@@ -1,6 +1,11 @@
 const express = require('express');
 const server = express();
 
+const morgan = require('morgan');
+const logger = morgan;
+
+const cors = require('cors');
+server.use(cors());
 let contacts = [
     {
       "id": 1,
@@ -99,4 +104,14 @@ server.listen(PORT, () => {
  console.log(`Application has been successfully deployed on ${PORT}. Date: ${new Date()}`)
 })
 
+
+server.use(logger(function (tokens, req, res) {
+  return [
+    tokens.method(req, res),
+    tokens.url(req, res),
+    tokens.status(req, res),
+    tokens.res(req, res, 'content-length'), '-',
+    tokens['response-time'](req, res), 'ms'
+  ].join(' ')
+}))
 // hey! unpack them into their modules!

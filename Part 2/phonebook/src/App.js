@@ -142,7 +142,14 @@ function Delete(id) {
  function destroy()
  {
  if (window.confirm("Are you sure you want to delete this contact?")) {
-   return comms.delete(id)
+   return comms.delete(id).catch(
+    response => {
+    return(
+     <div>
+       <p>The contact has been deleted already</p>
+     </div>
+    )}
+   )
  }
  }
 
