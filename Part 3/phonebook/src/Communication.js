@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let baseURL = "https://localhost/persons"
+let baseURL = "/persons"
 
 
 function Add(object) {
