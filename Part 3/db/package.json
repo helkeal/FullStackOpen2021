@@ -1,0 +1,15 @@
+{
+  "name": "db.js",
+  "version": "0.0.1",
+  "description": "connects to mongodb db ",
+  "main": "mongo.js",
+  "scripts": {
+    "test": "nodemon mongo.js"
+  },
+  "author": "Helge Kim",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^4.1.4"
+  }
+}
