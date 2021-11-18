@@ -1,11 +1,6 @@
-
 import {useState, useEffect} from 'react';
 import axios from 'axios';
-import comms from './Communication.js';
-
-require('dotenv').configure();
-
-
+import comms from './Communication.js'
 
 function App() {
 
