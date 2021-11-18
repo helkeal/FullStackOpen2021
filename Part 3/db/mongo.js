@@ -1,6 +1,4 @@
 const database = require('mongoose');
-
-
 const password = process.argv[2];
 const url = `mongodb+srv://helkeal:${password}@helgen.zgjsh.mongodb.net/site?retryWrites=true&w=majority`;
 
